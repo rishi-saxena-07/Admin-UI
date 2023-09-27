@@ -1,3 +1,11 @@
+# Admin-UI
+
+Interface for admins to see and delete users.
+
+## Deployed Site
+
+Check out the live version of the site at [https://user-managment-console.netlify.app/](https://user-managment-console.netlify.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
