@@ -13,7 +13,7 @@ const Pagination = ({
   totalPages,
   handleDeleteSelected,
   setCurrentPage,
-  selectedLine,
+  rowSelected,
 }) => {
   const handleChangePage = (page) => {
     setCurrentPage(page);
@@ -40,10 +40,10 @@ const Pagination = ({
       <div className="pag-buttons">
         <div className="delete-selected">
           <button
-            disabled={selectedLine.length === 0}
+            disabled={rowSelected.length === 0}
             style={{
               backgroundColor:
-                selectedLine.length === 0 ? "lightgrey" : "tomato",
+                rowSelected.length === 0 ? "lightgrey" : "tomato",
               color: "white",
               borderRadius: "20px",
             }}

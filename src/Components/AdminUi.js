@@ -10,12 +10,12 @@ const AdminUI = () => {
   const [users, setUsers] = useState([]);
   const [filterUsers, setFilterUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [selectedLine, setSelectedLine] = useState([]);
+  const [rowSelected, setRowSelected] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [pagUsers, setPagUsers] = useState([]);
 
-  const getData = async () => {
+  const getUserData = async () => {
     try {
       const response = await axios.get(
         "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
@@ -27,8 +27,8 @@ const AdminUI = () => {
     }
   };
   useEffect(() => {
-    getData();
-    setSelectedLine([]);
+    getUserData();
+    setRowSelected([]);
     setCurrentPage(1);
   }, []);
 
@@ -63,9 +63,9 @@ const AdminUI = () => {
   const handleRowSelect = (event, user) => {
     const selected = event.target.checked;
     if (selected) {
-      setSelectedLine((prevLine) => [...prevLine, user]);
+      setRowSelected((prevLine) => [...prevLine, user]);
     } else {
-      setSelectedLine((prevLine) =>
+      setRowSelected((prevLine) =>
         prevLine.filter((selectedRow) => selectedRow.id !== user.id)
       );
     }
@@ -74,19 +74,17 @@ const AdminUI = () => {
   const handleSelectAll = (event) => {
     const selected = event.target.checked;
     if (selected) {
-      setSelectedLine([...pagUsers]);
+      setRowSelected([...pagUsers]);
     } else {
-      setSelectedLine([]);
+      setRowSelected([]);
     }
   };
 
   const handleDeleteSelected = () => {
-    const leftUsers = filterUsers.filter(
-      (user) => !selectedLine.includes(user)
-    );
+    const leftUsers = filterUsers.filter((user) => !rowSelected.includes(user));
     setUsers(leftUsers);
     setFilterUsers(leftUsers);
-    setSelectedLine([]);
+    setRowSelected([]);
     if (currentPage > 1 && leftUsers.length <= (currentPage - 1) * 10) {
       setCurrentPage(currentPage - 1);
     }
@@ -104,7 +102,7 @@ const AdminUI = () => {
     const leftUsers = filterUsers.filter((u) => u.id !== user.id);
     setUsers(leftUsers);
     setFilterUsers(leftUsers);
-    setSelectedLine((prevLine) =>
+    setRowSelected((prevLine) =>
       prevLine.filter((selectedRow) => selectedRow.id !== user.id)
     );
     if (currentPage > 1 && leftUsers.length <= (currentPage - 1) * 10) {
@@ -119,7 +117,7 @@ const AdminUI = () => {
 
       <Table
         users={pagUsers}
-        selectedLine={selectedLine}
+        rowSelected={rowSelected}
         handleRowSelect={handleRowSelect}
         handleEditUser={handleEditUser}
         handleDeleteUser={handleDeleteUser}
@@ -131,7 +129,7 @@ const AdminUI = () => {
         totalPages={totalPages}
         handleDeleteSelected={handleDeleteSelected}
         setCurrentPage={setCurrentPage}
-        selectedLine={selectedLine}
+        rowSelected={rowSelected}
         handleSelectAll={handleSelectAll}
       />
     </div>

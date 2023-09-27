@@ -11,7 +11,7 @@ import "./table.css";
 
 const Table = ({
   users,
-  selectedLine,
+  rowSelected,
   handleRowSelect,
   handleEditUser,
   handleDeleteUser,
@@ -19,7 +19,7 @@ const Table = ({
 }) => {
   const [editIt, setEditIt] = useState(null);
 
-  const AllSelect = selectedLine.length === users.length;
+  const AllSelect = rowSelected.length === users.length;
 
   const handleEditing = (user) => {
     setEditIt(user);
@@ -41,7 +41,7 @@ const Table = ({
     }));
   };
 
-  const lineSelected = (user) => selectedLine.includes(user);
+  const lineSelected = (user) => rowSelected.includes(user);
 
   return (
     <div className="table-div">
